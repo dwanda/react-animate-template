@@ -1,12 +1,12 @@
-import React from 'luy'
-const style = require("raw-loader!./style1.txt") //注意使用raw-loader解析字符串
-const style2 = require("raw-loader!./style2.txt")
-const resume = require("raw-loader!./resume.txt")
+import React from 'react'
+// const style = require("raw-loader!./style1.txt") //注意使用raw-loader解析字符串
+// const style2 = require("raw-loader!./style2.txt")
+// const resume = require("raw-loader!./resume.txt")
 import showdown from 'showdown' //第三方的一个开源markdown库
 import Prism from 'prismjs'//第三方的一个开源的代码染色库，非常好用
-let interval
-
 import './preStyle.css' //就是预先放置的一个css
+
+let interval
 
 const wirteChars = (that, nodeName, char) => new Promise((resolve) => {
     setTimeout(() => {
