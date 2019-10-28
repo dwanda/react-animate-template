@@ -1,16 +1,18 @@
 import React from 'react'
-// const style = require("raw-loader!./style1.txt") //注意使用raw-loader解析字符串
-// const style2 = require("raw-loader!./style2.txt")
-// const resume = require("raw-loader!./resume.txt")
+
 import showdown from 'showdown' //第三方的一个开源markdown库
 import Prism from 'prismjs'//第三方的一个开源的代码染色库，非常好用
 import './preStyle.css' //就是预先放置的一个css
+
+import style from './style1.txt'
+import style2 from './style2.txt'
+import resume from './resume.txt'
 
 let interval
 
 const wirteChars = (that, nodeName, char) => new Promise((resolve) => {
     setTimeout(() => {
-        if (nodeName == 'workArea') {
+        if (nodeName === 'workArea') {
             const origin = that.state.DOMStyleText + char
             const html = Prism.highlight(origin, Prism.languages.css)
             that.setState({
@@ -19,7 +21,7 @@ const wirteChars = (that, nodeName, char) => new Promise((resolve) => {
             })
             
             that.contentNode.scrollTop = that.contentNode.scrollHeight
-        } else if (nodeName == 'resume') {
+        } else if (nodeName === 'resume') {
             const originResume = that.state.resumeText + char
             const converter = new showdown.Converter()
             const markdownResume = converter.makeHtml(originResume)
@@ -30,7 +32,7 @@ const wirteChars = (that, nodeName, char) => new Promise((resolve) => {
             that.resumeNode.scrollTop = that.resumeNode.scrollHeight
         }
         /* 这里是控制，当遇到中文符号的？，！的时候就延长时间  */
-        if (char == "？" || char == "，" || char == '！') {
+        if (char === "？" || char === "，" || char === '！') {
             interval = 800
         } else {
             interval = 22

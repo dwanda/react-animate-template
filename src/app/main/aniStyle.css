@@ -1,0 +1,22 @@
+
+.ani_mainBackground{
+    width: 100%;
+    height: 0px;
+    background-color: #cf7474;
+    position: fixed;
+}
+.ani_test1{
+    width: 100px;
+    height: 100px;
+    background-color: #cf7474;
+    position: absolute;
+}
+.ani_timeNumber{
+    position: absolute;
+    bottom: 10px;
+}
+.ani_Slider{
+    position: absolute;
+    bottom: 10px;
+    left: 300px;   
+}

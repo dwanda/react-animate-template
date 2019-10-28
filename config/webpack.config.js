@@ -1,4 +1,3 @@
-'use strict';
 
 const fs = require('fs');
 const isWsl = require('is-wsl');
@@ -25,7 +24,7 @@ const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
-const eslint = require('eslint');
+// const eslint = require('eslint');
 
 const postcssNormalize = require('postcss-normalize');
 
@@ -495,6 +494,11 @@ module.exports = function(webpackEnv) {
                 'sass-loader'
               ),
             },
+            {
+              test: /\.txt$/,
+              use: 'raw-loader'
+            },
+
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.
             // In production, they would get copied to the `build` folder.

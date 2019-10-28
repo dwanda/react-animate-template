@@ -1,0 +1,117 @@
+### 基础入门及创建
+https://www.taniarascia.com/getting-started-with-react/
+
+## 官方文档
+https://react.docschina.org/tutorial/tutorial.html#setup-option-2-local-development-environment
+
+## 基础命令
+
+### 渲染
+
+
+```
+const element = <h1> hello </h1>
+ReactDom.render(elelment,document.getElementById('root'));
+```
+
+
+### 组件
+
+```
+function Welcome(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
+
+或
+class Welcome extends React.Component{
+    return <h1>Hello, {this.props.name}</h1>;
+}
+
+const element = <Welcome name="Sara" />;
+ReactDOM.render(
+  element,
+  document.getElementById('root')
+);
+```
+
+### state
+
+```
+constructor(props) {
+    super(props);
+    this.state = {date: new Date()};
+  }
+  
+  // Correct
+this.setState({comment: 'Hello'});
+```
+因为 this.props 和 this.state 可能会异步更新，所以你不要依赖他们的值来更新下一个状态
+
+
+```
+// Correct
+this.setState((state, props) => ({
+  counter: state.counter + props.increment
+}));
+```
+
+state向下传递
+
+```
+<FormattedDate date={this.state.date} />
+
+function FormattedDate(props) {
+  return <h2>It is {props.date.toLocaleTimeString()}.</h2>;
+}
+```
+
+### 事件
+
+普通绑定 （不调用this
+
+```
+<button onClick={activateLasers}>
+  Activate Lasers
+</button>
+
+function ActionLink() {
+  function handleClick(e) {
+    e.preventDefault();
+    console.log('The link was clicked.');
+  }
+
+  return (
+    <a href="#" onClick={handleClick}>
+      Click me
+    </a>
+  );
+}
+```
+
+class方法调用this
+
+```
+class LoggingButton extends React.Component {
+  handleClick() {
+    console.log('this is:', this);
+  }
+
+  render() {
+    // 此语法确保 `handleClick` 内的 `this` 已被绑定。
+    return (
+      <button onClick={(e) => this.handleClick(e)}>
+        Click me
+      </button>
+    );
+  }
+}
+```
+
+
+#### registerServiceWorker.js
+这个文件可以使用也可以不使用，使用它可以使你的react项目变成一个PWA（Progressive Web Application）, 也就是说，在线上，只要访问过一次你的网站，下一次即使没有网络，这个应用依然可以被访问。
+
+
+## config-overrides.js
+配置react不eject的替代方法
+https://ant-design.gitee.io/docs/react/use-with-create-react-app-cn

@@ -1,18 +1,15 @@
-import './App.css';
-import test from './app/src/style1.txt'
-
+import styles from './App.module.css';
 import React, { Component } from 'react'
+import AniPage from './app/main/animation'
 
 export default class App extends Component {
-
   componentDidMount(){
-    console.log(test)
-  }
 
+  }
   render() {
     return (
-      <div>
-        
+      <div className={styles.main}>
+        <AniPage/>
       </div>
     )
   }
