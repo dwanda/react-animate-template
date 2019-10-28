@@ -5,6 +5,7 @@ import './aniStyle.css'
 import SliderBar from './sliderBar/sliderBar'
 
 export default class main extends Component {
+
     state = {
         timeValue:0,
     }
@@ -16,65 +17,110 @@ export default class main extends Component {
     }
 
     componentDidMount(){
-        this.getTime()
-
-        let timeline1 = anime.timeline({
-            direction: 'alternate',
-            duration: 500,
+        this.timeline1 = anime.timeline({
             easing: 'easeInOutSine',
+            direction: 'normal',
+            update: ()=>{
+                this.setState({
+                    timeValue:this.timeline1.progress
+                })
+            },
+            autoplay: false,
         });
-
-        timeline1.add({
-            targets: '.ani_test1',
-            translateX: 270
-        });
-  
-        timeline1.add({
+        this.timeline1.add({
           targets: '.ani_test1',
           translateX: {
-            value: 250,
-            duration: 800
+            value: 750,
+            duration: 1800
+          },
+          translateY: {
+            value: 350,
+            duration: 1800
           },
           rotate: {
             value: 360,
-            duration: 1800,
+            duration: 2800,
             easing: 'easeInOutSine'
           },
           scale: {
             value: 2,
             duration: 1600,
             delay: 800,
-            easing: 'easeInOutQuart'
-          }
+            easing: 'easeInOutSine'
+          },
+          opacity:1
         });
+
+        this.timeline1.add({
+            targets: '.ani_test2',
+            translateX: {
+              value: -350,
+              duration: 1800
+            },
+            translateY: {
+              value: 350,
+              duration: 1800
+            },
+            opacity:1,
+          },'-=2800');
 
         let timeline2 = anime.timeline({
             duration: 500,
             easing: 'easeInOutSine',
+            complete: ()=>{
+                console.log('加载背景功能完成')
+                this.timeline1.play()
+            }
         });
 
         timeline2.add({
             targets: '.ani_mainBackground',
-            backgroundColor: '#a7a7a7',
-        });
-        timeline2.add({
-            targets: '.ani_mainBackground',
-            backgroundColor: '#a7a7a7',
             height:'100%',
             easing: 'easeInOutQuad'
         });
+        timeline2.add({
+            targets: '.ani_Slider',
+            easing: 'easeInOutQuad',
+            opacity:1
+        });
     }
+
+    pauseAnimation = ()=>{
+        this.timeline1.pause()
+    }
+
+    playAnimation = ()=>{
+        this.timeline1.play()
+    }
+
+    restartAnimation = ()=>{
+        this.timeline1.restart()
+    }
+
+    seekAnimation = (time)=>{
+        //除以滚动条对于100的倍数，乘上28
+        this.timeline1.seek(time/5*28)
+    }
+
     render() {
         return (
             <React.Fragment>
                 <div className='ani_mainBackground'></div>
                 <div className='ani_test1'></div>
-                
+                <div className='ani_test2'></div>
+
                 <div className='ani_Slider'>
-                    <SliderBar></SliderBar>
+                    <SliderBar
+                        pauseAnimation={this.pauseAnimation}
+                        playAnimation={this.playAnimation}
+                        restartAnimation={this.restartAnimation}
+                        seekAnimation={this.seekAnimation}
+                        timeValue={this.state.timeValue}
+                    >
+                    </SliderBar>
                 </div>
-                {/* 测试用 */}
-                <div className='ani_timeNumber'>当前时间:{this.state.timeValue}</div>
+
+                <div className='ani_timeNumber' >当前时间:{this.state.timeValue}</div>
             </React.Fragment>
         )
     }
