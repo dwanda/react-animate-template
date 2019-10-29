@@ -1,84 +1,42 @@
 import React, { Component } from 'react'
 import anime from 'animejs/lib/anime.es.js';
 import './aniStyle.css'
-
 import SliderBar from './sliderBar/sliderBar'
+import mainAnimate from './timeLine/mainAnimate'
 
 export default class main extends Component {
-
     state = {
         timeValue:0,
+        totalTime:0
     }
-
-    getTime(){
-        // seekProgressEl.oninput = function() {
-        //     animation.seek(animation.duration * (seekProgressEl.value / 100));
-        // };
-    }
-
     componentDidMount(){
-        this.timeline1 = anime.timeline({
+        this.mainTimeline = anime.timeline({
             easing: 'easeInOutSine',
-            direction: 'normal',
             update: ()=>{
                 this.setState({
-                    timeValue:this.timeline1.progress
+                    timeValue:this.mainTimeline.progress
                 })
             },
             autoplay: false,
         });
-        this.timeline1.add({
-          targets: '.ani_test1',
-          translateX: {
-            value: 750,
-            duration: 1800
-          },
-          translateY: {
-            value: 350,
-            duration: 1800
-          },
-          rotate: {
-            value: 360,
-            duration: 2800,
-            easing: 'easeInOutSine'
-          },
-          scale: {
-            value: 2,
-            duration: 1600,
-            delay: 800,
-            easing: 'easeInOutSine'
-          },
-          opacity:1
-        });
-
-        this.timeline1.add({
-            targets: '.ani_test2',
-            translateX: {
-              value: -350,
-              duration: 1800
-            },
-            translateY: {
-              value: 350,
-              duration: 1800
-            },
-            opacity:1,
-          },'-=2800');
-
-        let timeline2 = anime.timeline({
+        
+        mainAnimate(this.mainTimeline)
+        
+        let backgroundTimeline = anime.timeline({
             duration: 500,
             easing: 'easeInOutSine',
             complete: ()=>{
                 console.log('加载背景功能完成')
-                this.timeline1.play()
+                this.mainTimeline.play()
             }
         });
 
-        timeline2.add({
+        backgroundTimeline.add({
             targets: '.ani_mainBackground',
             height:'100%',
             easing: 'easeInOutQuad'
         });
-        timeline2.add({
+        backgroundTimeline.add({
             targets: '.ani_Slider',
             easing: 'easeInOutQuad',
             opacity:1
@@ -86,29 +44,72 @@ export default class main extends Component {
     }
 
     pauseAnimation = ()=>{
-        this.timeline1.pause()
+        this.mainTimeline.pause()
     }
 
     playAnimation = ()=>{
-        this.timeline1.play()
+        this.mainTimeline.play()
     }
 
     restartAnimation = ()=>{
-        this.timeline1.restart()
+        this.mainTimeline.restart()
     }
 
     seekAnimation = (time)=>{
-        //除以滚动条对于100的倍数，乘上28
-        this.timeline1.seek(time/5*28)
+        //除以滚动条对于100的倍数，乘上总共有多少秒*10
+        this.mainTimeline.seek(time/5*(this.mainTimeline.duration/100))
+    }
+
+    makeFakeLoadingText=(number)=>{
+        let fakeLoading = []
+        for(let i=0; i<40; i++){
+            fakeLoading.push(<div key={i+'fakeLoading'} className='ani_oldBroswer_loadingDot'>......</div>)
+        }
+        return fakeLoading
     }
 
     render() {
         return (
             <React.Fragment>
                 <div className='ani_mainBackground'></div>
-                <div className='ani_test1'></div>
-                <div className='ani_test2'></div>
 
+                {/* 第一幕:旧浏览器 */}
+                <div className='ani_oldBroswer_Main'>
+                    <div className='ani_oldBroswer_insideBar'>
+                        <div>E:\WINDOWS\system32\cmd.exe</div>
+                        <div className='ani_oldBroswer_closeButton' title='别点啦，这个只是装饰'>
+                            <span className='ani_oldBroswer_closeText'>x</span>
+                        </div>
+                    </div>
+                    <div className='ani_oldBroswer_content'> 
+                        <div className='ani_oldBroswer_codeLine'>
+                            <div className='ani_oldBroswer_codeInside'> 
+                                Microsoft Windows [版本 6.1.7601]
+                            </div>
+                        </div>
+                        <div className='ani_oldBroswer_codeLine'>
+                            <div className='ani_oldBroswer_codeInside'> 
+                                版权所有 (c) 2019 Microsoft Corporation。保留所有权利。
+                            </div>
+                        </div>
+                        <div className='ani_oldBroswer_codeLine'>
+                            <div className='ani_oldBroswer_codeInside'> 
+                                C:\Users\DeskTop>
+                                <span className='ani_oldBroswer_openText'>
+                                    <span style={{display:'block',width:'300px'}}>打开我的浏览器</span>
+                                </span>
+                                <span className='ani_oldBroswer_loadingLine'></span>
+                            </div> 
+                        </div>
+                        <div className='ani_oldBroswer_loadingText'>
+                            {
+                                this.makeFakeLoadingText()
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                {/* 播放器 */}
                 <div className='ani_Slider'>
                     <SliderBar
                         pauseAnimation={this.pauseAnimation}
@@ -119,10 +120,8 @@ export default class main extends Component {
                     >
                     </SliderBar>
                 </div>
-
-                <div className='ani_timeNumber' >当前时间:{this.state.timeValue}</div>
+                {/* <div className='ani_timeNumber' >当前时间:{this.state.timeValue}</div> */}
             </React.Fragment>
         )
     }
-    
 }

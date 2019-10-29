@@ -15,10 +15,6 @@ export default class sliderBar extends Component {
             })
         }
     }
-    constructor(props){
-        super(props)
-        console.log(this.props.timeValue)
-    }
     mouseDown = (event)=>{
         event.preventDefault()
         document.addEventListener('mousemove',this.mouseMove)
@@ -50,9 +46,6 @@ export default class sliderBar extends Component {
     }
 
     trackListen = (event)=>{
-        console.log(event.target.parentElement.getBoundingClientRect().left);
-        console.log(event.screenX)
-
         this.props.pauseAnimation()
         
         let changeValue = event.screenX - event.target.parentElement.getBoundingClientRect().left

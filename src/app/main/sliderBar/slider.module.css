@@ -60,13 +60,13 @@
     padding: 0 15px;
     font-size: 14px;
     border: 1px #ffffff solid;
+    background-color: transparent;
     margin-left: -1px;
-    background-color: #cccccc;
     color: rgb(255, 255, 255);
     outline: none; 
 }
 
-.buttonBox>.insideButton:first-child{
+/* .buttonBox>.insideButton:first-child{
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
@@ -74,4 +74,4 @@
 .buttonBox>.insideButton:last-child{
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-}
+} */
