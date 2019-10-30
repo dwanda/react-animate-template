@@ -1,8 +1,12 @@
 import oldBroswer from './1-oldBroswer'
-import moving from './2-moving'
+import uploading from './2-uploading'
+import transforming from './3-transforming'
+
 
 //依次调用每一幕的动画函数
 export default function mainAnimate (timeline){
-    oldBroswer(timeline)
-    moving(timeline)
+    // oldBroswer(timeline)
+    // uploading(timeline)
+    console.log(timeline)
+    transforming(timeline)
 }

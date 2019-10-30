@@ -6,13 +6,13 @@ export default function oldBroswer(timeline){
         width:[0,800],
         duration:500,
         opacity:[0,1],
-        easing:'easeOutQuad',
+        easing:'easeOutQuad'
     });
     timeline.add({
         targets: '.ani_oldBroswer_Main',
         height:[0,500],
         duration:1000,
-        easing:'easeInOutQuad'
+        easing:'easeOutBack'
     });
     timeline.add({
       targets: '.ani_oldBroswer_content .ani_oldBroswer_codeLine',
@@ -34,9 +34,6 @@ export default function oldBroswer(timeline){
         width:[0,112],
         delay: anime.stagger(150),
         easing:'steps(7)',
-        complete:function(){
-            document.querySelector('.ani_oldBroswer_content').style.cssText='overflow-y:auto'
-        }
     });
     timeline.add({
         targets: '.ani_oldBroswer_loadingText',
@@ -48,7 +45,14 @@ export default function oldBroswer(timeline){
             ele.scrollTop = ele.scrollHeight
         }
     });
-
+    timeline.add({
+        targets: '.ani_oldBroswer_Main',
+        height:[500,0],
+        top:200,
+        duration:500,
+        opacity:[1,0],
+        easing:'easeOutQuad'
+    });
     // timeline.add({
     //       targets: '.ani_test2',
     //       translateX: {

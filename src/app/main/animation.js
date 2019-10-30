@@ -26,7 +26,6 @@ export default class main extends Component {
             duration: 500,
             easing: 'easeInOutSine',
             complete: ()=>{
-                console.log('加载背景功能完成')
                 this.mainTimeline.play()
             }
         });
@@ -70,7 +69,7 @@ export default class main extends Component {
 
     render() {
         return (
-            <React.Fragment>
+            <div className='ani_allMain'>
                 <div className='ani_mainBackground'></div>
 
                 {/* 第一幕:旧浏览器 */}
@@ -109,6 +108,12 @@ export default class main extends Component {
                     </div>
                 </div>
 
+                {/* 第二幕：加载进度条 */}
+
+                
+                {/* 第三幕：加载转场 */}
+                <canvas className='ani_oldBroswer_transToNew'></canvas>
+
                 {/* 播放器 */}
                 <div className='ani_Slider'>
                     <SliderBar
@@ -121,7 +126,7 @@ export default class main extends Component {
                     </SliderBar>
                 </div>
                 {/* <div className='ani_timeNumber' >当前时间:{this.state.timeValue}</div> */}
-            </React.Fragment>
+            </div>
         )
     }
 }
