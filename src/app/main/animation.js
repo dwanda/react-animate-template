@@ -19,7 +19,7 @@ export default class main extends Component {
             },
             autoplay: false,
         });
-        
+        console.log(this.mainTimeline)
         mainAnimate(this.mainTimeline)
         
         let backgroundTimeline = anime.timeline({

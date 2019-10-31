@@ -15,10 +15,13 @@
 }
 .ani_Slider{
     position: absolute;
+    width: 800px;
     bottom: 25px;
     opacity: 0;
     left: 50%;
-    transform: translate(-50%, 0);   
+    transform: translate(-50%, 0);  
+    display: flex;
+    justify-content: center; 
 }
 .ani_oldBroswer_Main{
     position: absolute;

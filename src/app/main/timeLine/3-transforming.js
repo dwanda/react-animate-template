@@ -4,38 +4,22 @@ let c
 let ctx
 let cH;
 let cW;
-let bgColor
-let animations
+let refreshCircle = [];
 
-//颜色选择器 将上一个颜色作为粒子
-let colorPicker = (function () {
-    let colors = ["#FF6138", "#FFBE53", "#2980B9", "#282741"];
-    let index = 0;
-    function next() {
-        index = index++ < colors.length - 1 ? index : 0;
-        return colors[index];
-    }
-    function current() {
-        return colors[index]
-    }
-    return {
-        next: next,
-        current: current
-    }
-})();
+function beginAnimation(positionX, positionY, nowColor, nextColor, timeline) {
+    let targetR = cW>cH?cW:cH;
+    let rippleSize = 300;
 
-function calcPageFillRadius(x, y) {
-    let l = Math.max(x - 0, cW - x);
-    let h = Math.max(y - 0, cH - y);
-    return Math.sqrt(Math.pow(l, 2) + Math.pow(h, 2));
-}
-
-function beginAnimation(positionX, positionY, timeline) {
-    let currentColor = colorPicker.current();
-    let nextColor = colorPicker.next();
-    let targetR = calcPageFillRadius(positionX, positionY);
-    let rippleSize = Math.min(300, (cW * .4));
-    let minCoverDuration = 1350;
+    timeline.add({
+        duration:2000,
+        begin(){
+            filterCircleAnimation(timeline)
+        },
+        update(){
+            ctx.clearRect(0, 0, cW, cH);
+            refreshCanvas()
+        }
+    })
 
     //全屏的圆
     let pageFill = new Circle({
@@ -44,52 +28,40 @@ function beginAnimation(positionX, positionY, timeline) {
         r: 0,
         fill: nextColor
     });
-    let fillAnimation = anime({
+    timeline.add({
         targets: pageFill,
-        r: targetR,
-        duration: Math.max(targetR / 2, minCoverDuration),
+        r: [0,targetR],
         easing: "easeOutQuart",
-        update() {
-            changeBackground()
-        },
-        complete: function () {
-            //当圆放大至全屏时，调整全局背景颜色为圆的颜色
-            bgColor = pageFill.fill;
-        }
-    });
+        duration: 2000,
+    },'-=2000');
 
     //中间的圆
     let ripple = new Circle({
         x: positionX,
         y: positionY,
         r: 0,
-        fill: currentColor,
-        opacity: 0
+        fill: nowColor,
     });
-    let rippleAnimation = anime({
+    timeline.add({
         targets: ripple,
         r: rippleSize,
-        opacity: [1, 0],
         easing: "easeOutQuart",
         fill: nextColor,
-        duration: 2200,
-        update() {
-            changeBackground()
-        },
-    });
+        duration: 2000,
+    },'-=2000');
 
     //散开的粒子
     let particles = [];
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 50; i++) {
         let particle = new Circle({
             x: positionX,
             y: positionY,
-            fill: currentColor,
-            r: anime.random(24, 48)
+            fill: nowColor,
+            r: 0
         })
         particles.push(particle);
     }
-    let particlesAnimation = anime({
+    timeline.add({
         targets: particles,
         x: function (particle) {
             return particle.x + anime.random(rippleSize, -rippleSize);
@@ -97,14 +69,16 @@ function beginAnimation(positionX, positionY, timeline) {
         y: function (particle) {
             return particle.y + anime.random(rippleSize * 1.15, -rippleSize * 1.15);
         },
-        r: 0,
+        r:[
+            {value:0,duration:0},
+            {value: function() { return anime.random(14, 50); },duration:50},
+            {value:0,duration:1800}
+        ],
         easing: "easeOutExpo",
-        duration: anime.random(2000, 2300),
-        update() {
-            changeBackground()
-        }
-    });
-    animations.push(fillAnimation, rippleAnimation, particlesAnimation);
+        duration: function(){
+            return anime.random(1700, 2000)
+        },
+    },'-=2000');
 }
 
 function extend(a, b) {
@@ -123,12 +97,9 @@ let Circle = function (opts) {
 Circle.prototype.draw = function () {
     ctx.globalAlpha = this.opacity || 1;
     ctx.beginPath();
+    //将圆的数据画在canvas上面
+    // 以(x,y)为圆心 r为半径的圆  绘制startAngle弧度 到endAngle弧度的圆弧 anticlosewise默认为false 即顺时针方向 true为逆时针方向
     ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
-    if (this.stroke) {
-        ctx.strokeStyle = this.stroke.color;
-        ctx.lineWidth = this.stroke.width;
-        ctx.stroke();
-    }
     if (this.fill) {
         ctx.fillStyle = this.fill;
         ctx.fill();
@@ -137,16 +108,22 @@ Circle.prototype.draw = function () {
     ctx.globalAlpha = 1;
 }
 
-function changeBackground() {
-    console.log('刷新画布')
-    ctx.fillStyle = bgColor;
-    //不断重新fill相当于clear了一遍
-    ctx.fillRect(0, 0, cW, cH);
-    animations.forEach(function (anim) {
+function filterCircleAnimation(timeline){
+    //找到序列中的我的圆形动画，目前先这样找吧，判断条件之后可以换
+    timeline.children.forEach(function (anim) {
         anim.animatables.forEach(function (animatable) {
-            animatable.target.draw();
+            if(animatable.target.r){
+                refreshCircle.push(animatable.target)
+                animatable.target.draw();
+            }
         });
     });
+}
+
+function refreshCanvas() {
+    refreshCircle.forEach((item)=>{
+        item.draw();
+    });  
 }
 
 //获取当前窗口的宽高信息
@@ -161,16 +138,10 @@ let resizeCanvas = function () {
 export default function oldBroswer(timeline) {
     c = document.querySelector(".ani_oldBroswer_transToNew");
     ctx = c.getContext("2d");
-    bgColor = "#FF6138";
-    animations = [];
- 
+    // bgColor = "#FF6138";
+
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
-    beginAnimation(anime.random(cW * .2, cW * .8), anime.random(cH * .2, cH * .8), timeline);
-
-    // timeline.add({
-    //     targets: '.ani_test1',
-    //     duration:1200,
-    //     opacity:0
-    // });
+    beginAnimation(anime.random(cW * .2, cW * .8), anime.random(cH * .2, cH * .8), "#FF6138", "#FFBE53", timeline);
+    beginAnimation(anime.random(cW * .2, cW * .8), anime.random(cH * .2, cH * .8), "#FFBE53", "#2980B9", timeline);
 } 

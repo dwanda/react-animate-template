@@ -5,8 +5,9 @@ import transforming from './3-transforming'
 
 //依次调用每一幕的动画函数
 export default function mainAnimate (timeline){
-    // oldBroswer(timeline)
-    // uploading(timeline)
     console.log(timeline)
+
+    oldBroswer(timeline)
+    // uploading(timeline)
     transforming(timeline)
 }
