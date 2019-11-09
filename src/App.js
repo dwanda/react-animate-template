@@ -1,6 +1,7 @@
 import styles from './App.module.css';
 import React, { Component } from 'react'
-import AniPage from './app/main/animation'
+// import AniPage from './app/main/animation'
+import ThreeTest from './app/threeTest/main'
 
 export default class App extends Component {
   componentDidMount(){
@@ -9,7 +10,7 @@ export default class App extends Component {
   render() {
     return (
       <div className={styles.main}>
-        <AniPage/>
+        <ThreeTest/>
       </div>
     )
   }
