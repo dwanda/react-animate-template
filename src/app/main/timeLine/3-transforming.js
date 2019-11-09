@@ -11,13 +11,25 @@ function beginAnimation(positionX, positionY, nowColor, nextColor, timeline) {
     let rippleSize = 300;
 
     timeline.add({
-        duration:2000,
+        duration:1000,
         begin(){
             filterCircleAnimation(timeline)
         },
-        update(){
+        update(anime){
             ctx.clearRect(0, 0, cW, cH);
             refreshCanvas()
+            console.log(timeline)
+
+
+            // console.log(index+1,index+2,index+3)
+            // timeline.children.forEach(function (anim) {
+            //     anim.animatables.forEach(function (animatable) {
+            //         if(animatable.target.r){
+            //             refreshCircle.push(animatable.target)
+            //             animatable.target.draw();
+            //         }
+            //     });
+            // });
         }
     })
 
@@ -32,8 +44,8 @@ function beginAnimation(positionX, positionY, nowColor, nextColor, timeline) {
         targets: pageFill,
         r: [0,targetR],
         easing: "easeOutQuart",
-        duration: 2000,
-    },'-=2000');
+        duration: 1000,
+    },'-=1000');
 
     //中间的圆
     let ripple = new Circle({
@@ -47,8 +59,8 @@ function beginAnimation(positionX, positionY, nowColor, nextColor, timeline) {
         r: rippleSize,
         easing: "easeOutQuart",
         fill: nextColor,
-        duration: 2000,
-    },'-=2000');
+        duration: 1000,
+    },'-=1000');
 
     //散开的粒子
     let particles = [];
@@ -72,13 +84,13 @@ function beginAnimation(positionX, positionY, nowColor, nextColor, timeline) {
         r:[
             {value:0,duration:0},
             {value: function() { return anime.random(14, 50); },duration:50},
-            {value:0,duration:1800}
+            {value:0,duration:950}
         ],
         easing: "easeOutExpo",
         duration: function(){
-            return anime.random(1700, 2000)
-        },
-    },'-=2000');
+            return anime.random(800, 1000)
+        }
+    },'-=1000');
 }
 
 function extend(a, b) {
@@ -95,7 +107,6 @@ let Circle = function (opts) {
 }
 
 Circle.prototype.draw = function () {
-    ctx.globalAlpha = this.opacity || 1;
     ctx.beginPath();
     //将圆的数据画在canvas上面
     // 以(x,y)为圆心 r为半径的圆  绘制startAngle弧度 到endAngle弧度的圆弧 anticlosewise默认为false 即顺时针方向 true为逆时针方向
@@ -105,18 +116,19 @@ Circle.prototype.draw = function () {
         ctx.fill();
     }
     ctx.closePath();
-    ctx.globalAlpha = 1;
 }
 
 function filterCircleAnimation(timeline){
     //找到序列中的我的圆形动画，目前先这样找吧，判断条件之后可以换
     timeline.children.forEach(function (anim) {
-        anim.animatables.forEach(function (animatable) {
-            if(animatable.target.r){
-                refreshCircle.push(animatable.target)
-                animatable.target.draw();
-            }
-        });
+        if(anim.changeBegan){
+            anim.animatables.forEach(function (animatable) {
+                if(animatable.target.r){
+                    refreshCircle.push(animatable.target)
+                    animatable.target.draw();
+                }
+            });
+        }
     });
 }
 
@@ -138,10 +150,10 @@ let resizeCanvas = function () {
 export default function oldBroswer(timeline) {
     c = document.querySelector(".ani_oldBroswer_transToNew");
     ctx = c.getContext("2d");
-    // bgColor = "#FF6138";
 
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
     beginAnimation(anime.random(cW * .2, cW * .8), anime.random(cH * .2, cH * .8), "#FF6138", "#FFBE53", timeline);
     beginAnimation(anime.random(cW * .2, cW * .8), anime.random(cH * .2, cH * .8), "#FFBE53", "#2980B9", timeline);
+    beginAnimation(anime.random(cW * .2, cW * .8), anime.random(cH * .2, cH * .8), "#2980B9", "#efefef", timeline);
 } 
