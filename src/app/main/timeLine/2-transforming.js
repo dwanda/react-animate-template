@@ -6,7 +6,7 @@ let cH;
 let cW;
 let refreshCircle = [];
 
-function beginAnimation(positionX, positionY, nowColor, nextColor, timeline) {
+function beginAnimation(positionX, positionY, nowColor, nextColor, timeline, offset=0) {
     let targetR = cW>cH?cW:cH;
     let rippleSize = 300;
 
@@ -19,19 +19,8 @@ function beginAnimation(positionX, positionY, nowColor, nextColor, timeline) {
             ctx.clearRect(0, 0, cW, cH);
             refreshCanvas()
             console.log(timeline)
-
-
-            // console.log(index+1,index+2,index+3)
-            // timeline.children.forEach(function (anim) {
-            //     anim.animatables.forEach(function (animatable) {
-            //         if(animatable.target.r){
-            //             refreshCircle.push(animatable.target)
-            //             animatable.target.draw();
-            //         }
-            //     });
-            // });
         }
-    })
+    },'-='+offset)
 
     //全屏的圆
     let pageFill = new Circle({
@@ -153,7 +142,7 @@ export default function oldBroswer(timeline) {
 
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
-    beginAnimation(anime.random(cW * .2, cW * .8), anime.random(cH * .2, cH * .8), "#FF6138", "#FFBE53", timeline);
-    beginAnimation(anime.random(cW * .2, cW * .8), anime.random(cH * .2, cH * .8), "#FFBE53", "#2980B9", timeline);
-    beginAnimation(anime.random(cW * .2, cW * .8), anime.random(cH * .2, cH * .8), "#2980B9", "#efefef", timeline);
+    beginAnimation(anime.random(cW * .2, cW * .8), anime.random(cH * .2, cH * .8), "#FF6138", "#FFBE53", timeline, 300);
+    beginAnimation(anime.random(cW * .2, cW * .8), anime.random(cH * .2, cH * .8), "#FFBE53", "#2980B9", timeline, 600);
+    beginAnimation(anime.random(cW * .2, cW * .8), anime.random(cH * .2, cH * .8), "#2980B9", "#efefef", timeline, 500);
 } 

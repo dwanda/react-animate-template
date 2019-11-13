@@ -3,6 +3,8 @@ import anime from 'animejs/lib/anime.es.js';
 import './aniStyle.css'
 import SliderBar from './sliderBar/sliderBar'
 import mainAnimate from './timeLine/mainAnimate'
+import ThreeTest from '../threeTest/main'
+
 
 export default class main extends Component {
     state = {
@@ -19,7 +21,6 @@ export default class main extends Component {
             },
             autoplay: false,
         });
-        console.log(this.mainTimeline)
         mainAnimate(this.mainTimeline)
         
         let backgroundTimeline = anime.timeline({
@@ -59,7 +60,7 @@ export default class main extends Component {
         this.mainTimeline.seek(time/5*(this.mainTimeline.duration/100))
     }
 
-    makeFakeLoadingText=(number)=>{
+    makeFakeLoadingText=()=>{
         let fakeLoading = []
         for(let i=0; i<40; i++){
             fakeLoading.push(<div key={i+'fakeLoading'} className='ani_oldBroswer_loadingDot'>......</div>)
@@ -72,8 +73,11 @@ export default class main extends Component {
             <div className='ani_allMain'>
                 <div className='ani_mainBackground'></div>
 
-                {/* 第一幕:旧浏览器 */}
-                <div className='ani_oldBroswer_Main'>
+                {/* 
+                    dom都写在这里是因为方便调整样式，代码提示也方便。
+                    class不用cssModule是因为想让anime直接搜索class名字识别好了。
+                    第一幕:旧浏览器 */}
+                {/* <div className='ani_oldBroswer_Main'>
                     <div className='ani_oldBroswer_insideBar'>
                         <div>E:\WINDOWS\system32\cmd.exe</div>
                         <div className='ani_oldBroswer_closeButton' title='别点啦，这个只是装饰'>
@@ -106,13 +110,13 @@ export default class main extends Component {
                             }
                         </div>
                     </div>
-                </div>
+                </div> */}
 
-                {/* 第二幕：加载进度条 */}
+                {/* 第二幕：加载转场 */}
+                {/* <canvas className='ani_oldBroswer_transToNew'></canvas> */}
 
-                
-                {/* 第三幕：加载转场 */}
-                <canvas className='ani_oldBroswer_transToNew'></canvas>
+                {/* 第三幕：新浏览器 */}
+                <ThreeTest/>
 
                 {/* 播放器 */}
                 <div className='ani_Slider'>
