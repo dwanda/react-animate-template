@@ -1,4 +1,4 @@
-该项目为动画演示。
+该项目为动画演示。尚未完成。
 
 In the project directory, you can run:
 
