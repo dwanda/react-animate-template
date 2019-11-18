@@ -18,7 +18,6 @@ function beginAnimation(positionX, positionY, nowColor, nextColor, timeline, off
         update(anime){
             ctx.clearRect(0, 0, cW, cH);
             refreshCanvas()
-            console.log(timeline)
         }
     },'-='+offset)
 

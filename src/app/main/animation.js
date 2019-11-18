@@ -3,8 +3,6 @@ import anime from 'animejs/lib/anime.es.js';
 import './aniStyle.css'
 import SliderBar from './sliderBar/sliderBar'
 import mainAnimate from './timeLine/mainAnimate'
-import ThreeTest from '../threeTest/main'
-
 
 export default class main extends Component {
     state = {
@@ -113,10 +111,10 @@ export default class main extends Component {
                 </div> */}
 
                 {/* 第二幕：加载转场 */}
-                {/* <canvas className='ani_oldBroswer_transToNew'></canvas> */}
+                <canvas className='ani_oldBroswer_transToNew'></canvas>
 
                 {/* 第三幕：新浏览器 */}
-                <ThreeTest/>
+                <div className='threeJs_aniBox'></div>
 
                 {/* 播放器 */}
                 <div className='ani_Slider'>

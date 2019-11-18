@@ -9,6 +9,6 @@ export default function mainAnimate (timeline){
     console.log(timeline)
 
     // oldBroswer(timeline)
-    // transforming(timeline)
+    transforming(timeline)
     newBroswer(timeline)
 }
