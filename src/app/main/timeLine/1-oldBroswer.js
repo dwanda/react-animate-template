@@ -53,16 +53,4 @@ export default function oldBroswer(timeline){
         opacity:[1,0],
         easing:'easeOutQuad'
     });
-    // timeline.add({
-    //       targets: '.ani_test2',
-    //       translateX: {
-    //         value: -350,
-    //         duration: 1800
-    //       },
-    //       translateY: {
-    //         value: 350,
-    //         duration: 1800
-    //       },
-    //       opacity:1,
-    // },'-=2800');
 } 

@@ -138,10 +138,10 @@ let resizeCanvas = function () {
 export default function oldBroswer(timeline) {
     c = document.querySelector(".ani_oldBroswer_transToNew");
     ctx = c.getContext("2d");
-
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
-    beginAnimation(anime.random(cW * .2, cW * .8), anime.random(cH * .2, cH * .8), "#FF6138", "#FFBE53", timeline, 300);
-    beginAnimation(anime.random(cW * .2, cW * .8), anime.random(cH * .2, cH * .8), "#FFBE53", "#2980B9", timeline, 600);
-    beginAnimation(anime.random(cW * .2, cW * .8), anime.random(cH * .2, cH * .8), "#2980B9", "#efefef", timeline, 500);
+    //第一个圆的位置确定
+    beginAnimation(anime.random(cW * .2, cW * .8), anime.random(cH * .2, cH * .8), "#FF6138", "#FFBE53", timeline, 0);
+    beginAnimation(anime.random(cW * .2, cW * .8), anime.random(cH * .2, cH * .8), "#FFBE53", "#2980B9", timeline, 0);
+    beginAnimation(anime.random(cW * .2, cW * .8), anime.random(cH * .2, cH * .8), "#2980B9", "#efefef", timeline, 0);
 } 

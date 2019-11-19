@@ -75,7 +75,7 @@ export default class main extends Component {
                     dom都写在这里是因为方便调整样式，代码提示也方便。
                     class不用cssModule是因为想让anime直接搜索class名字识别好了。
                     第一幕:旧浏览器 */}
-                {/* <div className='ani_oldBroswer_Main'>
+                <div className='ani_oldBroswer_Main'>
                     <div className='ani_oldBroswer_insideBar'>
                         <div>E:\WINDOWS\system32\cmd.exe</div>
                         <div className='ani_oldBroswer_closeButton' title='别点啦，这个只是装饰'>
@@ -108,13 +108,24 @@ export default class main extends Component {
                             }
                         </div>
                     </div>
-                </div> */}
+                </div>
 
                 {/* 第二幕：加载转场 */}
                 <canvas className='ani_oldBroswer_transToNew'></canvas>
 
-                {/* 第三幕：新浏览器 */}
+                {/* 第三幕：故障效果 */}
                 <div className='threeJs_aniBox'></div>
+
+                {/* 第四幕：新播放器 */}
+                <div className='ani_newBroswer_OutsideBox'>
+                    <div className='ani_newBroswer_InsideBox'>
+                        <div className='ani_newBroswer_LeftsideBar'>
+                            <div className='ani_newBroswer_User'>
+                                TEST 
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 {/* 播放器 */}
                 <div className='ani_Slider'>
@@ -127,7 +138,6 @@ export default class main extends Component {
                     >
                     </SliderBar>
                 </div>
-                {/* <div className='ani_timeNumber' >当前时间:{this.state.timeValue}</div> */}
             </div>
         )
     }
