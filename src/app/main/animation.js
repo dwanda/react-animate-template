@@ -3,6 +3,8 @@ import anime from 'animejs/lib/anime.es.js';
 import './aniStyle.css'
 import SliderBar from './sliderBar/sliderBar'
 import mainAnimate from './timeLine/mainAnimate'
+import { expandCards } from './timeLine/newBroswer/extendCards'
+
 
 export default class main extends Component {
     state = {
@@ -120,8 +122,32 @@ export default class main extends Component {
                 <div className='ani_newBroswer_OutsideBox'>
                     <div className='ani_newBroswer_InsideBox'>
                         <div className='ani_newBroswer_LeftsideBar'>
-                            <div className='ani_newBroswer_User'>
-                                TEST 
+                            <div className='ani_newBroswer_LeftsideBarContent'>
+  
+                                <img src={ require('../../static/icon/avatar.jpg') } alt='avatar' className='ani_newBroswer_User ele'  />
+                                <img src={ require('../../static/icon/company.png') }  alt='companyIcon' className='ani_newBroswer_Icon_Company ele'/>
+                                <img src={ require('../../static/icon/skill_entity.png') }  alt='companyIcon' className='ani_newBroswer_Icon_Head ele'/>
+                            </div>
+                        </div>
+                        <div className='ani_newBroswer_RightSideBox'>
+                            <div className='ani_newBroswer_UserInfo'>
+                                <div>测试标题</div>
+                            </div>
+                            <div className='ani_newBroswer_InformationCard'>
+    
+                            </div>
+                            <div className='ani_newBroswer_DataCard'>
+    
+                            </div>
+                            <div className='ani_newBroswer_ExtendCard1'>
+                                 
+                            </div>
+                            <div className='ani_newBroswer_ExtendCard2' onClick={()=>{ expandCards('ani_newBroswer_ExtendCard2') }}>
+                                 
+                            </div>
+                            
+                            <div className='ani_newBroswer_Content_Right'>
+                                <embed  src={ require('../../static/icon/smile.svg')} className='ani_newBroswer_PeopleImg' width="500" height="500"  />
                             </div>
                         </div>
                     </div>
@@ -142,3 +168,4 @@ export default class main extends Component {
         )
     }
 }
+
