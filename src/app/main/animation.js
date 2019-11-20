@@ -147,7 +147,7 @@ export default class main extends Component {
                             </div>
                             
                             <div className='ani_newBroswer_Content_Right'>
-                                <embed  src={ require('../../static/icon/smile.svg')} className='ani_newBroswer_PeopleImg' width="500" height="500"  />
+                                <embed  src={ require('../../static/icon/smile.svg')} className='ani_newBroswer_PeopleImg' width="240" height="240"  />
                             </div>
                         </div>
                     </div>

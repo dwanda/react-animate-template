@@ -13,14 +13,15 @@ export const loadedCards = function (){
 }
 
 export const expandCards = function (className){
+    document.querySelector('.'+className).style.zIndex = 300
+    document.querySelector('.'+className).style.boxShadow = 'none'
     anime({
         targets: '.'+className,
-        scale: [0,1],
-        opacity: [0,1],
-        zIndex:300,
-        rotateY:['180deg'  ,'0deg' ],
+        top:0,
+        left:0,
+        width:'100%',
+        height:[250,'100%'],
         easing:'easeOutSine',
-        duration:1000,
-        delay: anime.stagger(300),
+        duration:1000
     });    
 }
