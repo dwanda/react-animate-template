@@ -6,7 +6,7 @@ import newBroswer from './4-newBroswer'
 
 //依次调用每一幕的动画函数
 export default function mainAnimate (timeline){
-    console.log(timeline)
+    // console.log(timeline)
 
     // oldBroswer(timeline)
     // glitchCards(timeline)

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import anime from 'animejs/lib/anime.es.js';
 import './aniStyle.css'
+import './timeLine/newBroswer/newBroswerStyle.css'
 import SliderBar from './sliderBar/sliderBar'
 import mainAnimate from './timeLine/mainAnimate'
 import { expandCards } from './timeLine/newBroswer/extendCards'
@@ -134,12 +135,14 @@ export default class main extends Component {
                                 <div>测试标题</div>
                             </div>
                             <div className='ani_newBroswer_InformationCard'>
-    
+                                <img src={ require('../../static/icon/username.png') } alt='fakeImg' className='ani_newBroswer_FakeImg'/>
                             </div>
+
                             <div className='ani_newBroswer_DataCard'>
     
                             </div>
-                            <div className='ani_newBroswer_ExtendCard1'>
+
+                            <div className='ani_newBroswer_ExtendCard1' onClick={()=>{ expandCards('ani_newBroswer_ExtendCard1') }}>
                                  
                             </div>
                             <div className='ani_newBroswer_ExtendCard2' onClick={()=>{ expandCards('ani_newBroswer_ExtendCard2') }}>
@@ -147,6 +150,11 @@ export default class main extends Component {
                             </div>
                             
                             <div className='ani_newBroswer_Content_Right'>
+                                <div className='ani_newBroswer_InformationText1'>测试信息字体</div>
+
+                                <div className='ani_newBroswer_InformationText2'>测试信息字体</div>
+
+                                <div className='ani_newBroswer_PeopleBox'></div>
                                 <embed  src={ require('../../static/icon/smile.svg')} className='ani_newBroswer_PeopleImg' width="240" height="240"  />
                             </div>
                         </div>
